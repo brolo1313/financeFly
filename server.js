@@ -3,15 +3,12 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
-app.set('view engine', 'ejs');
-
 // Routes to serve the HTML files dynamically
 // Set up the static file path for public assets
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Set up the route to serve HTML files
 app.get('/', (req, res) => {
-  res.render('index'); // Rendering index.ejs
+  res.sendFile(path.join(__dirname, 'views/pages', `index.html`));
 });
 
 app.get('/views/pages/:page', (req, res) => {
