@@ -1,0 +1,10 @@
+node_modules
+public/static/build
+etc/config.js
+.next/
+dist/
+*.swp
+.env
+public/service-worker.js
+.idea/
+.vscode/launch.json

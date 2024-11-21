@@ -1,0 +1,20 @@
+/* Make sure swiper-container has height and proper layout */
+.swiper-container {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Ensure swiper slides take up full space */
+  .swiper-slide {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Optional: You can style the tabs as needed */
+  .tab-link-active {
+    color: #007aff;
+  }
+  
