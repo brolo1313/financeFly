@@ -14,20 +14,9 @@ app.get('/', (req, res) => {
   res.render('index'); // Rendering index.ejs
 });
 
-app.get('/home', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/pages', 'home.html')); // Serves home.html
-});
-
-app.get('/transaction', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/pages', 'transaction.html')); // Serves transaction.html
-});
-
-app.get('/budget', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/pages', 'budget.html')); // Serves budget.html
-});
-
-app.get('/profile', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/pages', 'profile.html')); // Serves profile.html
+app.get('/views/pages/:page', (req, res) => {
+  const { page } = req.params;
+  res.sendFile(path.join(__dirname, 'views/pages', `${page}.html`));
 });
 
 // Start the server

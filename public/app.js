@@ -1,83 +1,81 @@
-// app.js
-
+// Ініціалізація Framework7
 const app = new Framework7({
-    root: '#app', // App root element
-    id: 'com.myapp', // App ID
-    name: 'Swipeable Tabs App', // App name
-    theme: 'auto', // Auto theme (light or dark)
+    root: '#app', // Основний елемент додатку
+    name: 'finance fly', // Назва додатку
+    id: 'com.example.financeFly', // ID додатку
+    panel: { swipe: 'left' }, // Дозволити свайп панель
     routes: [
       {
-        path: '/',
-        url: './view/pages/index.html', // Path to index.html in view/pages folder
+        path: '/home',  // Шлях для вкладки Home
+        url: './views/pages/home.html',
       },
       {
-        path: '/home/',
-        url: './views/pages/home.html',  // Home page in view/pages folder
+        path: '/transaction',  // Шлях для вкладки Transaction
+        url: './views/pages/transaction.html',
       },
       {
-        path: '/transaction/',
-        url: './views/pages/transaction.html',  // Transaction page in view/pages folder
+        path: '/budget',  // Шлях для вкладки Budget
+        url: './views/pages/budget.html',
       },
       {
-        path: '/budget/',
-        url: './views/pages/budget.html',  // Budget page in view/pages folder
-      },
-      {
-        path: '/profile/',
-        url: './views/pages/profile.html',  // Profile page in view/pages folder
+        path: '/profile',  // Шлях для вкладки Profile
+        url: './views/pages/profile.html',
       }
     ],
-    view: {
-      dynamicNavbar: true, // Enable dynamic navbar
-    },
-  });
-  
-  const mainView = app.views.create('.view-main');
-  
-  // Swiper initialization
-  const swiper = new Framework7.Swiper('.swiper-container', {
-    spaceBetween: 10,
-    slidesPerView: 1,
-    navigation: true,
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
-    loop: true,  // Optional: Enable looping of tabs
     on: {
-      slideChange: function () {
-        // Update the tab navigation (active class) based on the swiper index
-        const activeIndex = this.activeIndex;
-        const tabLinks = document.querySelectorAll('.tab-link');
-        tabLinks.forEach((tabLink, index) => {
-          if (index === activeIndex) {
-            tabLink.classList.add('tab-link-active');
-          } else {
-            tabLink.classList.remove('tab-link-active');
+      init: function () {
+        // Ініціалізація Swiper після того, як сторінки будуть завантажені
+        const swiper = new Swiper('.swiper-container', {
+          loop: false, // Безкінечний цикл
+          slidesPerView: 1, // Одна вкладка за раз
+          spaceBetween: 10, // Відстань між вкладками
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
           }
         });
-      },
-    },
+  
+        // Подія для зміни слайдів (вкладок)
+        swiper.on('slideChange', function () {
+          const activeSlide = swiper.slides[swiper.activeIndex];
+          const activeTab = activeSlide.id; // Отримуємо ID активної вкладки
+  
+          // Завантажуємо динамічно відповідний контент
+          loadTabContent(activeTab);
+        });
+  
+        // Завантаження контенту для початкової вкладки (home)
+        loadTabContent('home');
+      }
+    }
   });
   
-  // Handle navigation when tab is clicked
-  document.querySelectorAll('.tab-link').forEach(tabLink => {
-    tabLink.addEventListener('click', function(e) {
-      e.preventDefault();
-      const targetTab = tabLink.getAttribute('href').replace('#', '');
-      const targetSlideIndex = Array.from(tabLink.parentElement.children).indexOf(tabLink);
-      
-      // Update Swiper index to match clicked tab
-      swiper.slideTo(targetSlideIndex);
-      
-      // Update the active link
-      document.querySelectorAll('.tab-link').forEach(link => {
-        link.classList.remove('tab-link-active');
+  // Функція для динамічного завантаження контенту вкладки
+  function loadTabContent(tabId) {
+    const tabContentContainer = document.querySelector(`#${tabId} .page-content`);
+    // console.log('tabId', tabId);
+  
+    // Fetch the HTML content only from the page content (not the whole page)
+    fetch(`/views/pages/${tabId}`) // Assuming the HTML file names match the tabId
+      .then(response => response.text())
+      .then(data => {
+        // console.log('data', data);
+        // console.log('tabContentContainer', tabContentContainer);
+  
+        // Extract the inner content from the fetched HTML (i.e., the content inside page-content)
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = data;
+        const newContent = tempDiv.querySelector('.page-content');
+  
+        // Replace the existing content inside the tab
+        tabContentContainer.innerHTML = newContent?.innerHTML;
+      })
+      .catch(error => {
+        console.error('Error loading tab content:', error);
       });
-      tabLink.classList.add('tab-link-active');
-      
-      // Use the main view's router to navigate
-      mainView.router.navigate(tabLink.getAttribute('href'));
-    });
-  });
+  }
+  
+  
+  // Ініціалізація основного перегляду
+  const mainView = app.views.create('.view-main');
   
