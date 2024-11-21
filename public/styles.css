@@ -1,6 +1,9 @@
 /* Make sure swiper-container has height and proper layout */
 
-
+.tab-link img.tab-link-active {
+  /* Add any style to indicate the active image, like a border or a different color */
+  filter: invert(35%) sepia(100%) saturate(3200%) hue-rotate(260deg) brightness(100%) contrast(100%);
+}
   .full-width {
     width: 100%;
   }
