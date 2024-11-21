@@ -3,20 +3,24 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
-// Routes to serve the HTML files dynamically
-// Set up the static file path for public assets
+// Налаштовуємо EJS як шаблонний двигун
+app.set('view engine', 'ejs');
+
+// Вказуємо папку для статичних файлів (CSS, JS, зображення)
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Маршрут для головної сторінки
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/pages', `index.html`));
+  res.render('index'); // Рендеримо index.ejs замість index.html
 });
 
-app.get('/views/pages/:page', (req, res) => {
+// Маршрут для інших сторінок
+app.get('/pages/:page', (req, res) => {
   const { page } = req.params;
-  res.sendFile(path.join(__dirname, 'views/pages', `${page}.html`));
+  res.render(`pages/${page}`); // Рендеримо динамічні сторінки через EJS
 });
 
-// Start the server
+// Запуск сервера
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

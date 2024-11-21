@@ -17,21 +17,19 @@
         <!-- Navbar -->
         <div class="navbar">
           <div class="navbar-inner sliding">
-            <div class="title">Swipeable Tabs</div>
+            <%- include('partials/header.ejs'); %>
           </div>
         </div>
 
         <!-- Tabbar (Bottom Toolbar) -->
-        <!-- Tabbar (Bottom Toolbar) -->
-      <div class="toolbar toolbar-bottom tabbar">
-        <div class="toolbar-inner">
-          <a href="#home" class="tab-link tab-link-active">Home</a>
-          <a href="#transaction" class="tab-link">Transaction</a>
-          <a href="#budget" class="tab-link">Budget</a>
-          <a href="#profile" class="tab-link">Profile</a>
+        <div class="toolbar toolbar-bottom tabbar">
+          <div class="toolbar-inner">
+            <a href="#home" class="tab-link tab-link-active"><img style="width: 20px; height: 20px;" src="/icons/home.svg" alt=""></a>
+            <a href="#transaction" class="tab-link"><img style="width: 20px; height: 20px;" src="/icons/transaction.svg" alt=""></a>
+            <a href="#budget" class="tab-link"><img style="width: 20px; height: 20px;" src="/icons/pie-chart.svg" alt=""></a>
+            <a href="#profile" class="tab-link"><img style="width: 20px; height: 20px;" src="/icons/user.svg" alt=""></a>
+          </div>
         </div>
-      </div>
-
 
         <!-- Swipeable Tabs Container (swiper-container) -->
         <div class="swiper-container tabs">
@@ -39,28 +37,32 @@
             <!-- Tab 1 (Home) -->
             <div class="swiper-slide" id="home">
               <div class="page-content">
-                <!-- Динамічно завантажений контент -->
+                <!-- Динамічно завантажений контент для вкладки Home -->
+                <!-- <%- include('pages/home'); %> -->
               </div>
             </div>
 
             <!-- Tab 2 (Transaction) -->
             <div class="swiper-slide" id="transaction">
               <div class="page-content">
-                <!-- Динамічно завантажений контент -->
+                <!-- Динамічно завантажений контент для вкладки Transaction -->
+                <!-- <%- include('pages/transaction'); %> -->
               </div>
             </div>
 
             <!-- Tab 3 (Budget) -->
             <div class="swiper-slide" id="budget">
               <div class="page-content">
-                <!-- Динамічно завантажений контент -->
+                <!-- Динамічно завантажений контент для вкладки Budget -->
+                <!-- <%- include('pages/budget'); %> -->
               </div>
             </div>
 
             <!-- Tab 4 (Profile) -->
             <div class="swiper-slide" id="profile">
               <div class="page-content">
-                <!-- Динамічно завантажений контент -->
+                <!-- Динамічно завантажений контент для вкладки Profile -->
+                <!-- <%- include('pages/profile'); %> -->
               </div>
             </div>
           </div>
