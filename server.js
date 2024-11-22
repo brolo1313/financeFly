@@ -6,6 +6,8 @@ const port = 3000;
 // Налаштовуємо EJS як шаблонний двигун
 app.set('view engine', 'ejs');
 
+app.set('views', path.join(__dirname, 'views'));
+
 // Вказуємо папку для статичних файлів (CSS, JS, зображення)
 app.use(express.static(path.join(__dirname, 'public')));
 
